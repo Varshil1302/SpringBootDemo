@@ -2,6 +2,7 @@ package com.springboot.springMvc.service;
 
 import com.springboot.springMvc.dto.EmployeeDTO;
 import com.springboot.springMvc.entity.EmployeeEntity;
+import com.springboot.springMvc.exception.ResourceNotFoundException;
 import com.springboot.springMvc.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,7 +26,7 @@ public class EmployeeService
 
     public EmployeeDTO fetchEmployee(Long Id)
     {
-        EmployeeEntity employee=employeeRepository.findById(Id).orElse(null);
+        EmployeeEntity employee=employeeRepository.findById(Id).orElseThrow(()->new ResourceNotFoundException("Employee Not Found With Id::"+Id));
         return mapper.map(employee,EmployeeDTO.class);
     }
     public List<EmployeeDTO> findlAllEmployee()
@@ -44,7 +45,7 @@ public class EmployeeService
     public EmployeeDTO updateEmployee(Long Id,EmployeeDTO employeeDTO)
     {
        // EmployeeEntity employeeEntity=mapper.map(employeeDTO,EmployeeEntity.class);
-        EmployeeEntity employeeEntity1=employeeRepository.findById(Id).orElse(null);
+        EmployeeEntity employeeEntity1=employeeRepository.findById(Id).orElseThrow(()->new ResourceNotFoundException("Employee Not Found With Id::"+Id));
         employeeEntity1.setAge(employeeDTO.getAge());
         employeeEntity1.setDateOfJoining(employeeDTO.getDateOfJoining());
         employeeEntity1.setEmail(employeeDTO.getEmail());
@@ -56,7 +57,7 @@ public class EmployeeService
     }
     public EmployeeDTO updatePartialEmployeeDetail(Long Id,EmployeeDTO empdto)
     {
-        EmployeeEntity employeeEntity=employeeRepository.findById(Id).orElse(null);
+        EmployeeEntity employeeEntity=employeeRepository.findById(Id).orElseThrow(()->new ResourceNotFoundException("Employee Not Found With Id::"+Id));
         employeeEntity.setEmail(empdto.getEmail());
         EmployeeEntity savedEmployee=employeeRepository.save(employeeEntity);
         return mapper.map(savedEmployee,EmployeeDTO.class);
