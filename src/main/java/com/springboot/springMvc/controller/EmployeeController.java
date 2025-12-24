@@ -2,6 +2,7 @@ package com.springboot.springMvc.controller;
 
 import com.springboot.springMvc.dto.EmployeeDTO;
 import com.springboot.springMvc.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class EmployeeController
     private final EmployeeService employeeService;
 
     @PostMapping("/createEmployee")
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO)
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO)
     {
         return new ResponseEntity<>(employeeService.createEmployee(employeeDTO), HttpStatus.CREATED);
     }
