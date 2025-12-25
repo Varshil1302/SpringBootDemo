@@ -1,5 +1,6 @@
 package com.springboot.springMvc.dto;
 
+import com.springboot.springMvc.annotation.EmployeeRoleValidation;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class EmployeeDTO
     private Integer age;
 
     @NotBlank(message = "Role of the employee cannot be blank")
+    @EmployeeRoleValidation
     private String role;
 
     @NotNull(message = "Salary Should not be null")
